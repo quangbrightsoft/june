@@ -1,6 +1,6 @@
 ﻿using Brightsoft.GraphQL.Helpers.Interfaces;
 
-namespace JuneApp.Models
+namespace Brightsoft.JuneApp.Models
 {
     public class LoginResultModel : ISupportGraphQLModel
     {

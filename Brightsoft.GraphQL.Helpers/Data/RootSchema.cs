@@ -6,13 +6,13 @@ namespace Brightsoft.GraphQL.Helpers.Data
 {
     public class RootSchema : Schema
     {
-        public RootSchema(IServiceProvider provider)
-            : base(provider)
+        public RootSchema(IServiceProvider serviceProvider)
+            : base(serviceProvider)
         {
             var allQueryBuilders = TypeHelper.GetAllTypesAssignableFromInCurrentDomain(typeof(ISchemaBuilder));
 
-            Query = new QueryRoot(provider, allQueryBuilders);
-            Mutation = new MutationRoot(provider, allQueryBuilders);
+            Query = new QueryRoot(serviceProvider, allQueryBuilders);
+            Mutation = new MutationRoot(serviceProvider, allQueryBuilders);
         }
     }
 }

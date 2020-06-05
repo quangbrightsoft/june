@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using Brightsoft.Core.Identity.Accounts;
 using Brightsoft.Data.Data;
 using Brightsoft.Data.Entities;
-using JuneApp.Models;
+using Brightsoft.JuneApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace JuneApp.Services
+namespace Brightsoft.JuneApp.Services
 {
     public class UserService : IUserService
     {

@@ -1,4 +1,4 @@
-namespace JuneApp.Models
+namespace Brightsoft.JuneApp.Models
 {
     public class GetUsersModel
     {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace JuneApp.Models
+namespace Brightsoft.JuneApp.Models
 {
     public class ForgotPasswordModel
     {

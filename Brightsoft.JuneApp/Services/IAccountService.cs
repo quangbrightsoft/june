@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using JuneApp.Models;
+using Brightsoft.JuneApp.Models;
 
-namespace JuneApp.Services
+namespace Brightsoft.JuneApp.Services
 {
     public interface IAccountService
     {

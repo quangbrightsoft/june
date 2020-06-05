@@ -4,17 +4,16 @@ using System.Net;
 using System.Threading.Tasks;
 using Brightsoft.Authentication.Jwt;
 using Brightsoft.Core.Identity.Accounts;
+using Brightsoft.Data.Data;
+using Brightsoft.Data.Entities;
+using Brightsoft.JuneApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Brightsoft.Data;
-using Brightsoft.Data.Data;
-using Brightsoft.Data.Entities;
-using JuneApp.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace JuneApp.Services
+namespace Brightsoft.JuneApp.Services
 {
     public class AccountService : IAccountService
     {

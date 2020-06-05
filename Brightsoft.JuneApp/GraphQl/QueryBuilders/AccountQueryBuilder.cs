@@ -1,18 +1,15 @@
 using System;
-using Brightsoft.Data.Entities;
-using Brightsoft.GraphQL.Helpers;
 using Brightsoft.GraphQL.Helpers.Data;
 using Brightsoft.GraphQL.Helpers.Interfaces;
+using Brightsoft.JuneApp.Models;
+using Brightsoft.JuneApp.Services;
 using GraphQL;
-using GraphQL.Server.Authorization.AspNetCore;
+using GraphQL.Authorization;
 using GraphQL.Types;
-using GraphQL.Utilities;
-using JuneApp.Models;
-using JuneApp.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace JuneApp.GraphQl.QueryBuilders
+namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
 {
     public class AccountQueryBuilder : ISchemaBuilder
     {

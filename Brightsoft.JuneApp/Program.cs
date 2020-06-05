@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace JuneApp
+namespace Brightsoft.JuneApp
 {
     public class Program
     {

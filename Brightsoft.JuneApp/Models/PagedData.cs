@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace JuneApp.Models
+namespace Brightsoft.JuneApp.Models
 {
     public class PagedData<T>
     {

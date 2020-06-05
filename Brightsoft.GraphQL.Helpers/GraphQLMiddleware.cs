@@ -1,6 +1,5 @@
 using GraphQL;
 using GraphQL.Instrumentation;
-using GraphQL.NewtonsoftJson;
 using GraphQL.Types;
 using GraphQL.Validation;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using GraphQL.NewtonsoftJson;
 
 namespace Brightsoft.GraphQL.Helpers
 {

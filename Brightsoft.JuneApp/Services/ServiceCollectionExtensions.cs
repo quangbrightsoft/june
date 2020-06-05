@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace JuneApp.Services
+namespace Brightsoft.JuneApp.Services
 {
     public static class ServiceCollectionExtensions
     {

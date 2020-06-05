@@ -1,6 +1,6 @@
 using System;
 
-namespace JuneApp.Models
+namespace Brightsoft.JuneApp.Models
 {
     public class BaseModel
     {

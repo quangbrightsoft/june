@@ -2,19 +2,15 @@
 using Brightsoft.GraphQL.Helpers.Interfaces;
 using GraphQL;
 using GraphQL.Instrumentation;
-using GraphQL.NewtonsoftJson;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using GraphQL.Authorization;
+using GraphQL.NewtonsoftJson;
 using GraphQL.Validation;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Brightsoft.GraphQL.Helpers
@@ -70,7 +66,7 @@ namespace Brightsoft.GraphQL.Helpers
                     instance.Description = attribute.Description;
                 }
 
-                services.AddSingleton(combinedType, a => instance);a
+                services.AddSingleton(combinedType, a => instance);
             }
         }
 
@@ -93,19 +89,19 @@ namespace Brightsoft.GraphQL.Helpers
         {
             var settings = new GraphQLSettings
             {
-                BuildUserContext =  ctx =>
-                {
-                    var userContext = new GraphQLUserContext
-                    {
-                        User = ctx.User
-                    };
+                BuildUserContext = ctx =>
+               {
+                   var userContext = new GraphQLUserContext
+                   {
+                       User = ctx.User
+                   };
 
-                    return userContext;
-                }
+                   return userContext;
+               }
             };
 
-            var rules = app.ApplicationServices.GetServices<IValidationRule>();
-            settings.ValidationRules.AddRange(rules);
+            //var rules = app.ApplicationServices.GetServices<IValidationRule>();
+            //settings.ValidationRules.AddRange(rules);
 
             app.UseMiddleware<GraphQLMiddleware>(settings);
         }

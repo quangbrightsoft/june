@@ -1,4 +1,4 @@
-﻿namespace JuneApp.Services.Identity.Roles
+﻿namespace Brightsoft.JuneApp.Services.Identity.Roles
 {
     public class StaticRoles
     {

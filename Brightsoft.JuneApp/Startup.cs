@@ -1,22 +1,19 @@
-using Brightsoft.Data;
+using Brightsoft.Authentication;
+using Brightsoft.Data.Data;
 using Brightsoft.GraphQL.Helpers;
+using Brightsoft.JuneApp.GraphQl.QueryBuilders;
+using Brightsoft.JuneApp.Services;
 using GraphQL.Server.Ui.GraphiQL;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Brightsoft.Authentication;
-using Brightsoft.Data.Data;
-using GraphQL.Server.Authorization.AspNetCore;
-using GraphQL.Validation;
-using JuneApp.Services;
-using Microsoft.AspNetCore.Http;
 
-namespace JuneApp
+namespace Brightsoft.JuneApp
 {
     public class Startup
     {
@@ -45,15 +42,14 @@ namespace JuneApp
                 configuration.RootPath = "adminfrontend/build";
             });
 
-            // Add graph QL API
-            services.AddGraphQlServices();
-
 
             // Configure JWT Bearer Authentication
             services.AddJwtBearerAuthentication(Configuration.GetSection("Jwt"));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-          
+
+            // Add graph QL API
+            services.AddGraphQlServices();
 
             services.AddApplicationServices();
         }

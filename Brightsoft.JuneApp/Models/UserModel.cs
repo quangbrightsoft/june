@@ -2,7 +2,7 @@
 using Brightsoft.Data.Entities;
 using Brightsoft.GraphQL.Helpers.Interfaces;
 
-namespace JuneApp.Models
+namespace Brightsoft.JuneApp.Models
 {
     public class UserModel : BaseModel, ISupportGraphQLModel
     {

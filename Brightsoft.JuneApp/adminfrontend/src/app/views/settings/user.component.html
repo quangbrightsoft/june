@@ -6,7 +6,11 @@
     <p *ngIf="loading">Loading...</p>
     <div class="row justify-content-start px-lg-2 my-1">
       <div class="col-2">
-        <button type="button" class="btn btn-block btn-success" (click)="goTo('settings/user-edit/0')">
+        <button
+          type="button"
+          class="btn btn-block btn-success"
+          (click)="goTo('settings/user-edit/0')"
+        >
           Create new
         </button>
       </div>
@@ -21,7 +25,11 @@
         <th cdk-header-cell *cdkHeaderCellDef (click)="sort('userName')">
           Username
         </th>
-        <td cdk-cell *cdkCellDef="let element">{{ element.userName }}</td>
+        <td cdk-cell *cdkCellDef="let element">
+          <a [href]="'#/settings/user-edit/' + element.id">{{
+            element.userName
+          }}</a>
+        </td>
       </ng-container>
       <ng-container cdkColumnDef="email">
         <th cdk-header-cell *cdkHeaderCellDef (click)="sort('email')">Email</th>

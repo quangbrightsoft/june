@@ -9,7 +9,7 @@ import gql from "graphql-tag";
 export class UserService {
   constructor(private apollo: Apollo) {}
 
-  get(params: any): Observable<any> {
+  getList(params: any): Observable<any> {
     let token = document.cookie;
     return this.apollo.mutate({
       mutation: gql`
@@ -29,6 +29,28 @@ export class UserService {
         }
       `,
       variables: params,
+    });
+  }
+  get(id: string): Observable<any> {
+    let token = document.cookie;
+    return this.apollo.mutate({
+      mutation: gql`
+        query QueryUsers($id: String) {
+          user(id: $id) {
+            email
+            createdAt
+            deletedAt
+            id
+            isDeleted
+            isDisabled
+            roles
+            ssn
+            updatedAt
+            userName
+          }
+        }
+      `,
+      variables: { id: id },
     });
   }
   register(params: any): Observable<any> {

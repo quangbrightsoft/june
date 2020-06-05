@@ -98,6 +98,17 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
                     }).Result.Items;
                 }
             ); //.AuthorizeWith("AdminPolicy");
+            queryRoot.Field<AutoRegisteringObjectGraphType<UserModel>>(
+                "user",
+                arguments: new QueryArguments(
+                    new QueryArgument<StringGraphType> { Name = "id" }),
+                resolve: context =>
+                {
+                    var userService = _contextAccessor.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                    //TODO pagination needed
+                    return userService.GetUserAsync(int.Parse(context.GetArgument<string>("id"))).Result;
+                }
+            ); //.AuthorizeWith("AdminPolicy");
         }
     }
 }

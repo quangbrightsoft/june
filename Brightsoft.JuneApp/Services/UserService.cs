@@ -70,9 +70,7 @@ namespace Brightsoft.JuneApp.Services
         }
         public async Task<UserModel> GetUserAsync(int id)
         {
-            var user = await _context.AppUsers
-
-                .FirstOrDefaultAsync(i => i.Id == id);
+            var user = await _context.AppUsers.Include(i => i.Account).FirstOrDefaultAsync(i => i.Id == id);
             if (user == null)
             {
                 throw new Exception("User does not exist");

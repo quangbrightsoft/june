@@ -28,7 +28,7 @@ export class UserComponent {
       });
     }
     this.loading = true;
-    this.userService.get(params).subscribe((result: any) => {
+    this.userService.getList(params).subscribe((result: any) => {
       if (!result.errors) {
         this.dataSource.data.next(result.data.users);
         this.loading = false;

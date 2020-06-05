@@ -1,0 +1,19 @@
+{
+  "$schema": "https://adrianwilczynski.github.io/CSharpToTypeScript/cs2tsconfig.json",
+  "input": "./Models",
+  "output": "./adminfrontend/src/models",
+  "useTabs": false,
+  "tabSize": 4,
+  "skipExport": false,
+  "useKebabCase": false,
+  "appendModelSuffix": false,
+  "clearOutputDirectory": true,
+  "angularMode": false,
+  "partialOverride": false,
+  "preserveCasing": false,
+  "preserveInterfacePrefix": false,
+  "convertDatesTo": "string",
+  "convertNullablesTo": "undefined",
+  "importGeneration": "simple",
+  "quotationMark": "double"
+}

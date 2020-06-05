@@ -1,34 +1,38 @@
 import { Injectable } from "@angular/core";
 import * as jwt_decode from "jwt-decode";
+import { AppCookieService } from "./cookie.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class JWTTokenService {
-  jwtToken: string;
   decodedToken: { [key: string]: string };
 
-  constructor() {}
+  constructor(private appCookieService: AppCookieService) {}
 
+  get() {
+    return this.appCookieService.get("userToken");
+  }
+  
   setToken(token: string) {
     if (token) {
-      this.jwtToken = token;
+      this.appCookieService.set("userToken", token);
     }
   }
 
   decodeToken() {
-    if (this.jwtToken) {
-      this.decodedToken = jwt_decode(this.jwtToken);
+    if (this.appCookieService.get("userToken")) {
+      this.decodedToken = jwt_decode(this.appCookieService.get("userToken"));
     }
   }
 
   getDecodeToken() {
-    return jwt_decode(this.jwtToken);
+    return jwt_decode(this.appCookieService.get("userToken"));
   }
 
   getUser() {
     this.decodeToken();
-    return this.decodedToken ? this.decodedToken.displayname : null;
+    return this.decodedToken ? this.decodedToken.sub : null;
   }
 
   getEmailId() {

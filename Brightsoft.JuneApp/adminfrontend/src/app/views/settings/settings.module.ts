@@ -1,3 +1,4 @@
+import { UserEditComponent } from './user-edit.component';
 // Angular
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -14,7 +15,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     CdkTableModule
   ],
   declarations: [
-    UsersComponent
+    UsersComponent,
+    UserEditComponent
   ]
 })
 export class SettingsModule { }

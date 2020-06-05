@@ -58,6 +58,26 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
                    });
                }
             );
+
+
+            mutationRoot.Field<AutoRegisteringObjectGraphType<LoginResultModel>>(
+                "createUser",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "email" },
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "fullName" },
+                    new QueryArgument<NonNullGraphType<ListGraphType<StringGraphType>>> { Name = "roles" }),
+                resolve: context =>
+                {
+                    var accountService = _contextAccessor.HttpContext.RequestServices.GetRequiredService<IUserService>();
+
+                    return accountService.CreateUserAsync(new CreateUserModel
+                    {
+                        Roles = context.GetArgument<string[]>("roles"),
+                        FullName = context.GetArgument<string>("fullName"),
+                        Email = context.GetArgument<string>("email"),
+                    });
+                }
+            );
         }
 
         public void BuildQuery(QueryRoot queryRoot)
@@ -65,8 +85,8 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
             queryRoot.Field<ListGraphType<AutoRegisteringObjectGraphType<UserModel>>>(
                 "users",
                 arguments: new QueryArguments(
-                    new QueryArgument<StringGraphType> { Name = "sortBy" },
-                    new QueryArgument<BooleanGraphType> { Name = "descending" }),
+                    new QueryArgument<StringGraphType> {Name = "sortBy"},
+                    new QueryArgument<BooleanGraphType> {Name = "descending"}),
                 resolve: context =>
                 {
                     var userService = _contextAccessor.HttpContext.RequestServices.GetRequiredService<IUserService>();
@@ -77,7 +97,7 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
                         Descending = context.GetArgument<bool>("descending")
                     }).Result.Items;
                 }
-            ).AuthorizeWith("AdminPolicy");
+            ); //.AuthorizeWith("AdminPolicy");
         }
     }
 }

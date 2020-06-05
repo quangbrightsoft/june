@@ -3,18 +3,19 @@ import { UserService } from "./../../user.service";
 import { Component } from "@angular/core";
 import { DataSource } from "@angular/cdk/table";
 import { Observable, BehaviorSubject } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
-  templateUrl: "users.component.html",
+  templateUrl: "user.component.html",
 })
-export class UsersComponent {
+export class UserComponent {
   users: any[];
   loading = true;
   error: any;
   dataSource = new ExampleDataSource();
   displayedColumns: string[] = ["id", "userName", "email"];
   sortData = { column: "", desc: false };
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
   ngOnInit() {
     this.getUsers();
   }
@@ -42,6 +43,10 @@ export class UsersComponent {
     this.sortData = { column: column, desc: descending };
 
     this.getUsers();
+  }
+
+  goTo(route: string) {
+    this.router.navigate([route]).catch(console.log);
   }
 }
 export class ExampleDataSource extends DataSource<UserModel> {

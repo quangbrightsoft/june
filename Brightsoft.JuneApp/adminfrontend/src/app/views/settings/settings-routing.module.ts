@@ -1,40 +1,40 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { UsersComponent } from './users.component';
-import { UserEditComponent } from './user-edit.component';
+import { UserComponent } from "./user.component";
+import { UserEditComponent } from "./user-edit.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     data: {
-      title: 'Settings'
+      title: "Settings",
     },
     children: [
       {
-        path: '',
-        redirectTo: 'users'
+        path: "",
+        redirectTo: "user",
       },
       {
-        path: 'users',
-        component: UsersComponent,
+        path: "user",
+        component: UserComponent,
         data: {
-          title: 'User Management'
-        }
+          title: "User Management",
+        },
       },
       {
-        path: 'users/edit/:id',
+        path: "user-edit/:id",
         component: UserEditComponent,
         data: {
-          title: 'User Edit'
-        }
-      }
-    ]
-  }
+          title: "User Edit",
+        },
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class SettingRoutingModule {}

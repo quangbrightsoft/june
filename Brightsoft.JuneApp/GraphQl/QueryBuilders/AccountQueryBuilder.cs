@@ -60,7 +60,7 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
             );
 
 
-            mutationRoot.Field<AutoRegisteringObjectGraphType<LoginResultModel>>(
+            mutationRoot.Field<AutoRegisteringObjectGraphType<UserModel>>(
                 "createUser",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "email" },

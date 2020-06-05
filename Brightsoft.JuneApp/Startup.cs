@@ -1,5 +1,11 @@
+using System;
+using System.Threading.Tasks;
 using Brightsoft.Authentication;
+using Brightsoft.Core.Identity.Accounts;
+using Brightsoft.Core.Identity.Roles;
+using Brightsoft.Data;
 using Brightsoft.Data.Data;
+using Brightsoft.Data.Entities;
 using Brightsoft.GraphQL.Helpers;
 using Brightsoft.JuneApp.GraphQl.QueryBuilders;
 using Brightsoft.JuneApp.Services;
@@ -7,6 +13,7 @@ using GraphQL.Server.Ui.GraphiQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -55,7 +62,11 @@ namespace Brightsoft.JuneApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env,
+            ApplicationDbContext dbContext,
+            RoleManager<Role> roleManager,
+            UserManager<Account> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -98,6 +109,11 @@ namespace Brightsoft.JuneApp
             {
                 endpoints.MapRazorPages();
             });
+
+            // Ensure database and tables are created
+            var dbInitializer = new DbInitializer(dbContext, userManager, roleManager);
+            dbInitializer.SeedData().Wait();
         }
+
     }
 }

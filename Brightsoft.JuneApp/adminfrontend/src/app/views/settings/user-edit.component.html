@@ -1,5 +1,83 @@
 <div class="animated fadeIn">
   <div class="card">
-    <h1>User create/edit</h1>
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> User create/edit
+    </div>
+    <form
+      [formGroup]="editForm"
+      (ngSubmit)="onSubmit()"
+      class="form-horizontal"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input
+                formControlName="fullName"
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Enter your name"
+              />
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+        <div class="form-group">
+          <label for="if-email">Email</label>
+          <input
+            formControlName="email"
+            type="email"
+            id="if-email"
+            name="if-email"
+            class="form-control"
+            placeholder="Enter Email.."
+            autocomplete="email"
+          />
+        </div>
+        <!--/.row-->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Roles</label>
+          <div class="col-md-9 col-form-label">
+            <div class="form-check">
+              <input
+                formControlName="roles"
+                class="form-check-input"
+                type="radio"
+                name="roles"
+                id="radio1"
+                value="Admin"
+                checked
+              />
+              <label class="form-check-label" for="radio1">
+                Admin
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="radios"
+                id="radio2"
+                value="User"
+              />
+              <label class="form-check-label" for="radio2">
+                User
+              </label>
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary">
+          <i class="fa fa-dot-circle-o"></i> Submit
+        </button>
+        <button type="reset" class="btn btn-sm btn-danger">
+          <i class="fa fa-ban"></i> Reset
+        </button>
+      </div>
+    </form>
   </div>
 </div>

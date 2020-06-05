@@ -5,17 +5,19 @@ import { NgModule } from '@angular/core';
 
 // Theme Routing
 import { SettingRoutingModule } from './settings-routing.module';
-import { UsersComponent } from './users.component';
+import { UserComponent } from './user.component';
 import { CdkTableModule } from '@angular/cdk/table';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     SettingRoutingModule,
-    CdkTableModule
+    CdkTableModule,
+    ReactiveFormsModule
   ],
   declarations: [
-    UsersComponent,
+    UserComponent,
     UserEditComponent
   ]
 })

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Brightsoft.Core.Identity.Accounts;
+using Brightsoft.Core.Identity.Roles;
 using Brightsoft.Data.Data;
 using Brightsoft.Data.Entities;
 using Brightsoft.JuneApp.Models;
@@ -16,12 +17,14 @@ namespace Brightsoft.JuneApp.Services
         private readonly UserManager<Account> _userManager;
         private readonly IConfiguration _config;
         private readonly ApplicationDbContext _context;
+        private readonly RoleManager<Role> _roleManager;
 
-        public UserService(UserManager<Account> userManager, IConfiguration config, ApplicationDbContext context)
+        public UserService(UserManager<Account> userManager, IConfiguration config, ApplicationDbContext context, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _config = config;
             _context = context;
+            _roleManager = roleManager;
         }
 
         public async Task<PagedData<UserModel>> GetUsersAsync(GetUsersModel model)
@@ -87,7 +90,7 @@ namespace Brightsoft.JuneApp.Services
                     Email = model.Email,
                 }
             };
-
+            var roles = _roleManager.Roles;
 
             var result = await _userManager.CreateAsync(user.Account, "Asdfgh1@3");
 

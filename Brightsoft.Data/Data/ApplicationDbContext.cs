@@ -14,7 +14,6 @@ namespace Brightsoft.Data.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<AppUser> AppUsers { get; set; }

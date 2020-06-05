@@ -47,6 +47,22 @@ export class UserService {
       variables: params,
     });
   }
+  create(params: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation Create(
+          $fullName: String!
+          $email: String!
+          $roles: [String]!
+        ) {
+          createUser(fullName: $fullName, email: $email, roles: $roles) {
+            id
+          }
+        }
+      `,
+      variables: params,
+    });
+  }
   login(params: any): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`

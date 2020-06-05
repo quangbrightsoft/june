@@ -29,7 +29,14 @@ export class UserEditComponent {
   getCurrentUser() {}
   onSubmit() {
     this.userService.create(this.editForm.value).subscribe((result) => {
-      console.log(result);
+      if (!result.errors) {
+        this.goTo('/settings/user')
+      } else {
+        console.error("ERROR in onSubmit", result.errors);
+      }
     });
+  }
+  goTo(route: string) {
+    this.router.navigate([route]).catch(console.log);
   }
 }

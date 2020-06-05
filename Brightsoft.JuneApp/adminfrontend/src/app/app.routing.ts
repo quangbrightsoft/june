@@ -53,6 +53,7 @@ export const routes: Routes = [
     children: [
       {
         path: "settings",
+        canActivate: [AuthorizeGuard],
         loadChildren: () =>
           import("./views/settings/settings.module").then(
             (m) => m.SettingsModule

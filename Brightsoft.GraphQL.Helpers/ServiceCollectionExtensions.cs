@@ -6,6 +6,7 @@ using GraphQL.Types;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Reflection;
 using GraphQL.Authorization;
 using GraphQL.NewtonsoftJson;
@@ -89,6 +90,7 @@ namespace Brightsoft.GraphQL.Helpers
         {
             var settings = new GraphQLSettings
             {
+                ValidationRules = DocumentValidator.CoreRules.Concat(app.ApplicationServices.GetServices<IValidationRule>()),
                 BuildUserContext = ctx =>
                {
                    var userContext = new GraphQLUserContext
@@ -100,8 +102,6 @@ namespace Brightsoft.GraphQL.Helpers
                }
             };
 
-            //var rules = app.ApplicationServices.GetServices<IValidationRule>();
-            //settings.ValidationRules.AddRange(rules);
 
             app.UseMiddleware<GraphQLMiddleware>(settings);
         }

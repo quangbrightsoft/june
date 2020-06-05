@@ -68,7 +68,7 @@ namespace Brightsoft.GraphQL.Helpers
                 _.OperationName = request?.OperationName;
                 _.Inputs = request?.Variables.ToInputs();
                 _.UserContext = _settings.BuildUserContext?.Invoke(context);
-                _.ValidationRules = DocumentValidator.CoreRules.Concat(new[] { new InputValidationRule() });
+                _.ValidationRules = _settings.ValidationRules;
                 _.EnableMetrics = _settings.EnableMetrics;
                 _.ExposeExceptions = true;
                 if (_settings.EnableMetrics)

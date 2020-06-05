@@ -14,6 +14,6 @@ namespace Brightsoft.GraphQL.Helpers
         public bool EnableMetrics { get; set; }
 
         public object Root { get; set; }
-        public List<IValidationRule> ValidationRules { get; } = new List<IValidationRule>();
+        public IEnumerable<IValidationRule> ValidationRules { get; set; }
     }
 }

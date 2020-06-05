@@ -10,6 +10,7 @@ export class UserService {
   constructor(private apollo: Apollo) {}
 
   get(params: any): Observable<any> {
+    let token = document.cookie;
     return this.apollo.mutate({
       mutation: gql`
         query QueryUsers($sortBy: String, $descending: Boolean) {

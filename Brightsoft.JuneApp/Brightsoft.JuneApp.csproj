@@ -19,6 +19,9 @@
 
 	<ItemGroup>
 		<Folder Include="adminfrontend\dist\out-tsc\src\app\views\settings\" />
+		<Folder Include="adminfrontend\node_modules\jwt-decode\build\" />
+		<Folder Include="adminfrontend\node_modules\jwt-decode\lib\" />
+		<Folder Include="adminfrontend\node_modules\jwt-decode\test\" />
 		<Folder Include="Services\Identity\AccountRoles\" />
 		<Folder Include="Services\Identity\Roles\" />
 	</ItemGroup>

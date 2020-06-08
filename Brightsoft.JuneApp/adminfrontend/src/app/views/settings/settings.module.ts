@@ -1,3 +1,4 @@
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserEditComponent } from './user-edit.component';
 // Angular
 import { CommonModule } from '@angular/common';
@@ -9,7 +10,6 @@ import { UserComponent } from './user.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { BaseRoutingModule } from '../base/base-routing.module';
 
 @NgModule({
   imports: [
@@ -19,6 +19,7 @@ import { BaseRoutingModule } from '../base/base-routing.module';
     CdkTableModule,
     ReactiveFormsModule,
     PaginationModule.forRoot(),
+    AlertModule
   ],
   declarations: [
     UserComponent,

@@ -39,29 +39,17 @@
         <!--/.row-->
         <div class="form-group row">
           <label class="col-md-3 col-form-label">Roles</label>
-          <div class="col-md-9 col-form-label">
-            <div class="form-check">
-              <input
-                formControlName="roles"
-                class="form-check-input"
-                type="checkbox"
-                name="roles"
-                value="Admin"
-                checked
-              />
-              <label class="form-check-label" for="radio1">
-                Admin
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="roles"
-                value="User"
-              />
-              <label class="form-check-label" for="radio2">
-                User
+          <div class="col-md-9 col-form-label"  formGroupName="roles">
+            <div *ngFor="let item of editForm.get('roles').value | keyvalue">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="roles"
+                  [formControlName]="item.key"
+                  [value]="item.value"
+                />
+                {{ item.key }}
               </label>
             </div>
           </div>

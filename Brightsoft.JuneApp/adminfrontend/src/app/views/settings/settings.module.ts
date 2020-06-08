@@ -7,14 +7,18 @@ import { NgModule } from '@angular/core';
 import { SettingRoutingModule } from './settings-routing.module';
 import { UserComponent } from './user.component';
 import { CdkTableModule } from '@angular/cdk/table';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { BaseRoutingModule } from '../base/base-routing.module';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     SettingRoutingModule,
     CdkTableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PaginationModule.forRoot(),
   ],
   declarations: [
     UserComponent,

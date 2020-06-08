@@ -88,7 +88,6 @@ namespace Brightsoft.JuneApp.Services
                     Email = model.Email,
                 }
             };
-            var roles = _roleManager.Roles;
 
             var result = await _userManager.CreateAsync(user.Account, "Asdfgh1@3");
 
@@ -106,15 +105,13 @@ namespace Brightsoft.JuneApp.Services
             {
                 throw new Exception(result.Errors.First().Description);
             }
-            else
-            {
-                throw new Exception("Cannot create user.");
-            }
+
+            throw new Exception("Cannot create user.");
         }
         public async Task<bool> UpdateUserAsync(int id, CreateUserModel model)
         {
             var user = await _context.AppUsers
-                .Include(i => i.Account)
+                .Include(i => i.Account).ThenInclude(i => i.Roles).ThenInclude(i => i.Role)
                 .FirstOrDefaultAsync(i => i.Id == id);
             if (user == null)
             {

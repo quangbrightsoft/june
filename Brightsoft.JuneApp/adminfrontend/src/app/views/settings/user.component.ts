@@ -4,9 +4,13 @@ import { Component } from "@angular/core";
 import { DataSource } from "@angular/cdk/table";
 import { Observable, BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
+import { getAlertConfig } from '../notifications/alerts.component';
+import { AlertConfig } from 'ngx-bootstrap/alert';
 
 @Component({
   templateUrl: "user.component.html",
+  
+  providers: [{ provide: AlertConfig, useFactory: getAlertConfig }]
 })
 export class UserComponent {
   users: any[];
@@ -15,6 +19,9 @@ export class UserComponent {
   dataSource = new ExampleDataSource();
   displayedColumns: string[] = ["id", "userName", "email"];
   sortData = { column: "", desc: false };
+  totalItems: number;
+  currentPage: number = 1;
+
   constructor(private userService: UserService, private router: Router) {}
   ngOnInit() {
     this.getUsers();
@@ -47,6 +54,11 @@ export class UserComponent {
 
   goTo(route: string) {
     this.router.navigate([route]).catch(console.log);
+  }
+
+  pageChanged(event: any): void {
+    console.log("Page changed to: " + event.page);
+    console.log("Number items per page: " + event.itemsPerPage);
   }
 }
 export class ExampleDataSource extends DataSource<UserModel> {

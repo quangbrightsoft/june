@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Brightsoft.Data.Entities;
 using Brightsoft.GraphQL.Helpers.Interfaces;
 
@@ -15,20 +16,11 @@ namespace Brightsoft.JuneApp.Models
         public UserModel(AppUser user)
         {
             var entity = user.Account;
-
             Id = user.Id;
             UserName = entity.UserName;
             Email = entity.Email;
             //IsDisabled = entity.IsDisabled;
-            //if (entity.Roles != null)
-            //{
-            //    Roles = entity.Roles.Where(x => x.Role != null).Select(x => x.Role.Name);
-            //}
-            //else
-            //{
-            //    Roles = Enumerable.Empty<string>();
-            //}
-
+            Roles = entity.Roles != null ? entity.Roles.Where(x => x.Role != null).Select(x => x.Role.Name) : Enumerable.Empty<string>();
         }
     }
 }

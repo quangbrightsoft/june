@@ -1,99 +1,55 @@
+
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header">
       <i class="fa fa-align-justify"></i> Users - from BE
     </div>
-    <p *ngIf="loading">Loading...</p>
-    <div class="row justify-content-start px-lg-2 my-1">
-      <div class="col-2">
-        <button
-          type="button"
-          class="btn btn-block btn-success"
-          (click)="goTo('settings/user-edit/0')"
-        >
-          Create new
-        </button>
+    <div class="card-body">
+      <alert *ngIf="loading" type="success">
+        Loading...
+      </alert>
+      <div class="row justify-content-start">
+        <div class="col-2">
+          <button
+            type="button"
+            class="btn btn-block btn-success"
+            (click)="goTo('settings/user-edit/0')"
+          >
+            Create new
+          </button>
+        </div>
       </div>
+
+      <table cdk-table [dataSource]="dataSource" class="table">
+        <ng-container cdkColumnDef="id">
+          <th cdk-header-cell *cdkHeaderCellDef (click)="sort('id')">Id</th>
+          <td cdk-cell *cdkCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+        <ng-container cdkColumnDef="userName">
+          <th cdk-header-cell *cdkHeaderCellDef (click)="sort('userName')">
+            Username
+          </th>
+          <td cdk-cell *cdkCellDef="let element">
+            <a [href]="'#/settings/user-edit/' + element.id">{{
+              element.userName
+            }}</a>
+          </td>
+        </ng-container>
+        <ng-container cdkColumnDef="email">
+          <th cdk-header-cell *cdkHeaderCellDef (click)="sort('email')">
+            Email
+          </th>
+          <td cdk-cell *cdkCellDef="let element">{{ element.email }}</td>
+        </ng-container>
+
+        <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <pagination
+        [totalItems]="totalItems"
+        [(ngModel)]="currentPage"
+        (pageChanged)="pageChanged($event)"
+      ></pagination>
     </div>
-
-    <table cdk-table [dataSource]="dataSource" class="table">
-      <ng-container cdkColumnDef="id">
-        <th cdk-header-cell *cdkHeaderCellDef (click)="sort('id')">Id</th>
-        <td cdk-cell *cdkCellDef="let element">{{ element.id }}</td>
-      </ng-container>
-      <ng-container cdkColumnDef="userName">
-        <th cdk-header-cell *cdkHeaderCellDef (click)="sort('userName')">
-          Username
-        </th>
-        <td cdk-cell *cdkCellDef="let element">
-          <a [href]="'#/settings/user-edit/' + element.id">{{
-            element.userName
-          }}</a>
-        </td>
-      </ng-container>
-      <ng-container cdkColumnDef="email">
-        <th cdk-header-cell *cdkHeaderCellDef (click)="sort('email')">Email</th>
-        <td cdk-cell *cdkCellDef="let element">{{ element.email }}</td>
-      </ng-container>
-
-      <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-      <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><i class="fa fa-align-justify"></i> Users</div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Date registered</th>
-          <th>Role</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Samppa Nori</td>
-          <td>2012/01/01</td>
-          <td>Member</td>
-          <td>
-            <span class="badge badge-success">Active</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Estavan Lykos</td>
-          <td>2012/02/01</td>
-          <td>Staff</td>
-          <td>
-            <span class="badge badge-danger">Banned</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Chetan Mohamed</td>
-          <td>2012/02/01</td>
-          <td>Admin</td>
-          <td>
-            <span class="badge badge-secondary">Inactive</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Derick Maximinus</td>
-          <td>2012/03/01</td>
-          <td>Member</td>
-          <td>
-            <span class="badge badge-warning">Pending</span>
-          </td>
-        </tr>
-        <tr>
-          <td>Friderik Dávid</td>
-          <td>2012/01/21</td>
-          <td>Staff</td>
-          <td>
-            <span class="badge badge-success">Active</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>

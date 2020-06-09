@@ -14,6 +14,11 @@ namespace Brightsoft.Data.Configuration
                 .WithMany(x => x.AccountRoles)
                 .HasForeignKey(x => x.RoleId)
                 .IsRequired();
+
+            builder.HasOne(x => x.Account)
+                .WithMany(x => x.Roles)
+                .HasForeignKey(x => x.UserId)
+                .IsRequired();
         }
     }
 }

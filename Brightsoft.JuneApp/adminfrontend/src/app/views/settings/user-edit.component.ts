@@ -36,7 +36,11 @@ export class UserEditComponent {
       parseInt(this.currentUserId) &&
         this.userService.get(this.currentUserId).subscribe((response) => {
           this.currentUser = response.data.user;
-          this.editForm.value.fullName = this.currentUser.userName;
+          this.editForm.controls["fullName"].setValue(
+            this.currentUser.userName
+          );
+          this.editForm.controls["email"].setValue(this.currentUser.email);
+          this.editForm.controls["roles"].setValue(this.currentUser.roles);
         });
     });
     const checkboxes = <FormGroup>this.editForm.get("roles");
@@ -44,7 +48,6 @@ export class UserEditComponent {
       checkboxes.addControl(option, new FormControl(false));
     });
   }
-  getCurrentUser() {}
   onSubmit() {
     let params = {
       id: this.currentUserId,
@@ -52,7 +55,7 @@ export class UserEditComponent {
       email: this.editForm.value.email,
       roles: this.rolesFormGroupSelectedIds,
     };
-    if (!this.currentUserId) {
+    if (!parseInt(this.currentUserId)) {
       this.userService.create(params).subscribe(
         (result) => {
           this.goTo("/settings/user");

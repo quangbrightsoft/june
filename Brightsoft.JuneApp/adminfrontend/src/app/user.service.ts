@@ -94,7 +94,7 @@ export class UserService {
           $email: String!
           $roles: [String]!
         ) {
-          editUser(id: $id, fullName: $fullName, email: $email, roles: $roles) 
+          editUser(id: $id, fullName: $fullName, email: $email, roles: $roles)
         }
       `,
       variables: params,

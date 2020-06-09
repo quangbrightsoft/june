@@ -1,4 +1,5 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Brightsoft.Authentication;
 using Brightsoft.Core.Identity.Accounts;
@@ -20,6 +21,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace Brightsoft.JuneApp
@@ -52,10 +54,15 @@ namespace Brightsoft.JuneApp
             });
 
 
+            services.AddHttpContextAccessor();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Remove all default claims
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             // Configure JWT Bearer Authentication
             services.AddJwtBearerAuthentication(Configuration.GetSection("Jwt"));
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Add graph QL API
             services.AddGraphQlServices();

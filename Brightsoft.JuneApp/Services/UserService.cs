@@ -29,7 +29,7 @@ namespace Brightsoft.JuneApp.Services
 
         public async Task<PagedData<UserModel>> GetUsersAsync(GetUsersModel model)
         {
-            var query = _context.AppUsers.Include(i => i.Account).AsQueryable();
+            var query = _context.AppUsers.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(model.Search))
             {
@@ -58,8 +58,8 @@ namespace Brightsoft.JuneApp.Services
                 query = query.Take(model.PageSize);
             }
 
+            query = query.Include(i => i.Account).ThenInclude(i => i.Roles).ThenInclude(i => i.Role);
             var users = await query.AsNoTracking().ToListAsync();
-
             return new PagedData<UserModel>
             {
                 Items = users.Select(i => new UserModel(i)),
@@ -70,7 +70,9 @@ namespace Brightsoft.JuneApp.Services
         }
         public async Task<UserModel> GetUserAsync(int id)
         {
-            var user = await _context.AppUsers.Include(i => i.Account).FirstOrDefaultAsync(i => i.Id == id);
+            var user = await _context.AppUsers
+                .Include(i => i.Account).ThenInclude(i => i.Roles).ThenInclude(i => i.Role)
+                .FirstOrDefaultAsync(i => i.Id == id);
             if (user == null)
             {
                 throw new Exception("User does not exist");

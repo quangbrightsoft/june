@@ -8,26 +8,26 @@ import { AppCookieService } from "./cookie.service";
 export class JWTTokenService {
   decodedToken: { [key: string]: string };
 
-  constructor(private appCookieService: AppCookieService) {}
+  constructor() {}
 
   get() {
-    return this.appCookieService.get("userToken");
+    return localStorage.getItem("userToken");
   }
   
   setToken(token: string) {
     if (token) {
-      this.appCookieService.set("userToken", token);
+      localStorage.setItem("userToken", token);
     }
   }
 
   decodeToken() {
-    if (this.appCookieService.get("userToken")) {
-      this.decodedToken = jwt_decode(this.appCookieService.get("userToken"));
+    if (localStorage.getItem("userToken")) {
+      this.decodedToken = jwt_decode(localStorage.getItem("userToken"));
     }
   }
 
   getDecodeToken() {
-    return jwt_decode(this.appCookieService.get("userToken"));
+    return jwt_decode(localStorage.getItem("userToken"));
   }
 
   getUser() {

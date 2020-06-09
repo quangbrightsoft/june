@@ -7,14 +7,13 @@ import { Injectable } from "@angular/core";
 import { JWTTokenService } from "./jwt-token.service";
 @Injectable()
 export class UniversalAppInterceptor implements HttpInterceptor {
-  constructor(private jWTTokenService: JWTTokenService) {}
+  constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = this.jWTTokenService.get();
     req = req.clone({
       url: req.url,
       setHeaders: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
       },
     });
     return next.handle(req);

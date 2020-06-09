@@ -17,7 +17,7 @@ export class UserComponent {
   loading = true;
   error: any;
   dataSource = new ExampleDataSource();
-  displayedColumns: string[] = ["id", "userName", "email"];
+  displayedColumns: string[] = ["id", "userName", "email", "roles"];
   sortData = { column: "", desc: false };
   totalItems: number;
   currentPage: number = 1;

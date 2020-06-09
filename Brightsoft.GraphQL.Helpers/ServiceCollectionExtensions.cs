@@ -8,9 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using GraphQL.Authorization;
 using GraphQL.NewtonsoftJson;
 using GraphQL.Validation;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -73,14 +75,14 @@ namespace Brightsoft.GraphQL.Helpers
 
         public static void AddGraphQlAuth(this IServiceCollection services)
         {
-            services.TryAddSingleton<IAuthorizationEvaluator, AuthorizationEvaluator>();
+            services.TryAddSingleton<IAuthorizationEvaluator, JwtTokenAuthorizationEvaluator>();
             services.AddTransient<IValidationRule, AuthorizationValidationRule>();
 
             services.TryAddSingleton(s =>
             {
                 var authSettings = new AuthorizationSettings();
 
-                authSettings.AddPolicy("AdminPolicy", _ => _.RequireClaim("role", "Admin"));
+                authSettings.AddPolicy("AdminPolicy", _ => _.AddRequirement(new ClaimAuthorizationRequirement(ClaimTypes.Role, new[] { "Admin" })));
 
                 return authSettings;
             });
@@ -91,15 +93,20 @@ namespace Brightsoft.GraphQL.Helpers
             var settings = new GraphQLSettings
             {
                 ValidationRules = DocumentValidator.CoreRules.Concat(app.ApplicationServices.GetServices<IValidationRule>()),
-                BuildUserContext = ctx =>
-               {
-                   var userContext = new GraphQLUserContext
-                   {
-                       User = ctx.User
-                   };
+                BuildUserContext = httpContext =>
+                {
+                    if (httpContext.User.Identity.IsAuthenticated)
+                    {
+                        return new GraphQLUserContext { User = httpContext.User };
+                    }
 
-                   return userContext;
-               }
+                    var result = httpContext.AuthenticateAsync().GetAwaiter().GetResult();
+                    if (result.Succeeded)
+                    {
+                        httpContext.User = result.Principal;
+                    }
+                    return new GraphQLUserContext { User = result.Principal };
+                }
             };
 
 

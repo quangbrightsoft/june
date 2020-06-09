@@ -1,4 +1,3 @@
-import { AppCookieService } from "./../../cookie.service";
 import { Component } from "@angular/core";
 import { navItems } from "../../_nav";
 
@@ -9,9 +8,9 @@ import { navItems } from "../../_nav";
 export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
-  constructor(private appCookieService: AppCookieService) {}
+  constructor() {}
   logout() {
-    this.appCookieService.remove("userToken");
+    localStorage.removeItem("userToken");
 
   }
   toggleMinimize(e) {

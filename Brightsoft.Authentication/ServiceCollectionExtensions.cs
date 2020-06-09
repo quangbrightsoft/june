@@ -9,7 +9,6 @@ using System;
 using System.Text;
 using Brightsoft.Core.Identity.Accounts;
 using Brightsoft.Core.Identity.Roles;
-using Brightsoft.Data;
 using Brightsoft.Data.Data;
 
 namespace Brightsoft.Authentication

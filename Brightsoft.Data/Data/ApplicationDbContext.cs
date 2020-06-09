@@ -22,8 +22,6 @@ namespace Brightsoft.Data.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Account>().ToTable("AspNetUsers");
-            builder.Entity<AppUser>();
             builder.ApplyConfiguration(new UserRoleConfiguration());
         }
     }

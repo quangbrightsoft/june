@@ -1,4 +1,5 @@
-import { SettingsModule } from './views/settings/settings.module';
+import { JWTTokenService } from "./jwt-token.service";
+import { SettingsModule } from "./views/settings/settings.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
@@ -39,7 +40,7 @@ import { AppRoutingModule } from "./app.routing";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TabsModule } from "ngx-bootstrap/tabs";
 import { ChartsModule } from "ng2-charts";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HttpHeaders } from "@angular/common/http";
 import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
 import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -62,7 +63,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     ApolloModule,
     HttpLinkModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,
@@ -83,6 +84,9 @@ import { ReactiveFormsModule } from "@angular/forms";
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
+            headers: new HttpHeaders({
+              Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+            }),
             uri: "https://localhost:5001/api/graphql/",
           }),
         };

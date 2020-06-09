@@ -41,6 +41,12 @@
           </th>
           <td cdk-cell *cdkCellDef="let element">{{ element.email }}</td>
         </ng-container>
+        <ng-container cdkColumnDef="roles">
+          <th cdk-header-cell *cdkHeaderCellDef (click)="sort('roles')">
+            Roles
+          </th>
+          <td cdk-cell *cdkCellDef="let element">{{ element.roles }}</td>
+        </ng-container>
 
         <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
         <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>

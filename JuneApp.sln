@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brightsoft.GraphQL.Helpers"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brightsoft.JuneApp", "Brightsoft.JuneApp\Brightsoft.JuneApp.csproj", "{FFC7DDD2-ADF8-49F2-8690-FDB31499111B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brightsoft.CronJob", "Brightsoft.CronJob\Brightsoft.CronJob.csproj", "{952D3584-C6FB-4672-8BD8-FF918C1F409C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FFC7DDD2-ADF8-49F2-8690-FDB31499111B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFC7DDD2-ADF8-49F2-8690-FDB31499111B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFC7DDD2-ADF8-49F2-8690-FDB31499111B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{952D3584-C6FB-4672-8BD8-FF918C1F409C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{952D3584-C6FB-4672-8BD8-FF918C1F409C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{952D3584-C6FB-4672-8BD8-FF918C1F409C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{952D3584-C6FB-4672-8BD8-FF918C1F409C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

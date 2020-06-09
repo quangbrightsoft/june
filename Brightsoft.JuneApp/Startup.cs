@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using Brightsoft.Authentication;
 using Brightsoft.Core.Identity.Accounts;
 using Brightsoft.Core.Identity.Roles;
+using Brightsoft.CronJob;
 using Brightsoft.Data;
 using Brightsoft.Data.Data;
 using Brightsoft.Data.Entities;
 using Brightsoft.GraphQL.Helpers;
+using Brightsoft.JuneApp.Cron;
 using Brightsoft.JuneApp.GraphQl.QueryBuilders;
 using Brightsoft.JuneApp.Services;
 using GraphQL.Server.Ui.GraphiQL;
@@ -59,6 +61,12 @@ namespace Brightsoft.JuneApp
             services.AddGraphQlServices();
 
             services.AddApplicationServices();
+
+            services.AddCronJob<MyCronJob1>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Local;
+                c.CronExpression = @"*/1 * * * *";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

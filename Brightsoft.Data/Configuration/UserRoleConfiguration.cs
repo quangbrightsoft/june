@@ -1,4 +1,4 @@
-﻿using Brightsoft.Core.Identity.AccountRoles;
+﻿using Brightsoft.Data.Identity.AccountRoles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

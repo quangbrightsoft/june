@@ -7,9 +7,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
-using Brightsoft.Core.Identity.Accounts;
-using Brightsoft.Core.Identity.Roles;
 using Brightsoft.Data.Data;
+using Brightsoft.Data.Identity.Accounts;
+using Brightsoft.Data.Identity.Roles;
 
 namespace Brightsoft.Authentication
 {

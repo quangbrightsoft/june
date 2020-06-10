@@ -1,4 +1,4 @@
-using Brightsoft.Core.Identity.Accounts;
+using Brightsoft.Data.Identity.Accounts;
 using Brightsoft.GraphQL.Helpers.Interfaces;
 
 namespace Brightsoft.Data.Entities

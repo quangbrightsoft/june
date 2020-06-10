@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Brightsoft.Core.Identity.AccountRoles;
+using Brightsoft.Data.Identity.AccountRoles;
 using Microsoft.AspNetCore.Identity;
 
-namespace Brightsoft.Core.Identity.Roles
+namespace Brightsoft.Data.Identity.Roles
 {
     public class Role : IdentityRole<Guid>
     {

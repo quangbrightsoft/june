@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Brightsoft.Core.Identity.Accounts;
-using Brightsoft.Core.Identity.Roles;
 using Brightsoft.Data.Data;
 using Brightsoft.Data.Entities;
+using Brightsoft.Data.Identity.Accounts;
+using Brightsoft.Data.Identity.Roles;
 using Brightsoft.JuneApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

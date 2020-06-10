@@ -1,9 +1,9 @@
 ﻿using System;
-using Brightsoft.Core.Identity.Accounts;
-using Brightsoft.JuneApp.Services.Identity.Roles;
+using Brightsoft.Data.Identity.Accounts;
+using Brightsoft.Data.Identity.Roles;
 using Microsoft.AspNetCore.Identity;
 
-namespace Brightsoft.JuneApp.Services.Identity.AccountRoles
+namespace Brightsoft.Data.Identity.AccountRoles
 {
     public class AccountRole : IdentityUserRole<Guid>
     {

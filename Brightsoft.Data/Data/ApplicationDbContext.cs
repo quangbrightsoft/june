@@ -1,9 +1,9 @@
 ﻿using System;
-using Brightsoft.Core.Identity.AccountRoles;
-using Brightsoft.Core.Identity.Accounts;
-using Brightsoft.Core.Identity.Roles;
 using Brightsoft.Data.Configuration;
 using Brightsoft.Data.Entities;
+using Brightsoft.Data.Identity.AccountRoles;
+using Brightsoft.Data.Identity.Accounts;
+using Brightsoft.Data.Identity.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿namespace Brightsoft.Core.Identity.Roles
+﻿namespace Brightsoft.Data.Identity.Roles
 {
     public class StaticRoles
     {

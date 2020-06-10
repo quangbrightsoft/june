@@ -9,5 +9,6 @@ namespace Brightsoft.JuneApp.Services
         Task<LoginResultModel> RegisterAsync(RegisterModel model);
         Task<bool> ForgotPassword(ForgotPasswordModel model);
         Task<bool> SetPassword(PasswordRecoverModel model);
+        Task<RefreshTokenResultModel> RefreshToken(string authenticationToken, string refreshToken);
     }
 }

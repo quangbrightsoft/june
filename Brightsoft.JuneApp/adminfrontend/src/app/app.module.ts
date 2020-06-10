@@ -1,3 +1,4 @@
+import { UniversalAppInterceptor } from './http-interceptor.service';
 import { JWTTokenService } from "./jwt-token.service";
 import { SettingsModule } from "./views/settings/settings.module";
 import { BrowserModule } from "@angular/platform-browser";
@@ -40,7 +41,7 @@ import { AppRoutingModule } from "./app.routing";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TabsModule } from "ngx-bootstrap/tabs";
 import { ChartsModule } from "ng2-charts";
-import { HttpClientModule, HttpHeaders } from "@angular/common/http";
+import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
 import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -92,6 +93,11 @@ import { ReactiveFormsModule } from "@angular/forms";
         };
       },
       deps: [HttpLink],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UniversalAppInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

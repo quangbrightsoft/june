@@ -50,6 +50,8 @@ namespace Brightsoft.Authentication
 
         public static IServiceCollection AddJwtBearerAuthentication(this IServiceCollection services, IConfigurationSection jwtSettingsSection)
         {
+            services.AddSingleton<IJwtGenerator, JwtGenerator>();
+
             var secretKey = jwtSettingsSection.GetSection(nameof(JwtSettings.SecretKey)).Value;
             var issuer = jwtSettingsSection.GetSection(nameof(JwtSettings.Issuer)).Value;
             var audience = jwtSettingsSection.GetSection(nameof(JwtSettings.Audience)).Value;

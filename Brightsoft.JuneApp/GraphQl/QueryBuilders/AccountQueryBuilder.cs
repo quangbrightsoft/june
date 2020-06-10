@@ -21,9 +21,22 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
             _serviceProvider = serviceProvider;
             _contextAccessor = contextAccessor;
         }
-
         public void BuildMutation(MutationRoot mutationRoot)
         {
+            mutationRoot.Field<AutoRegisteringObjectGraphType<RefreshTokenResultModel>>(
+                "refreshToken",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "authenticationToken" },
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "refreshToken" }),
+                resolve: context =>
+                {
+                    var accountService = _contextAccessor.HttpContext.RequestServices.GetRequiredService<IAccountService>();
+
+                    return accountService.RefreshToken(context.GetArgument<string>("authenticationToken"),
+                        context.GetArgument<string>("refreshToken"));
+                }
+            );
+
             mutationRoot.Field<AutoRegisteringObjectGraphType<LoginResultModel>>(
                 "login",
                 arguments: new QueryArguments(

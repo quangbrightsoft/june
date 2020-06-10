@@ -106,6 +106,7 @@ export class UserService {
           login(username: $id, password: $password) {
             userName
             accessToken
+            refreshToken
           }
         }
       `,

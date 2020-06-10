@@ -2,9 +2,8 @@
 
 namespace Brightsoft.JuneApp.Models
 {
-    public class LoginResultModel : ISupportGraphQLModel
+    public class RefreshTokenResultModel : ISupportGraphQLModel
     {
-        public string UserName { get; set; }
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
     }

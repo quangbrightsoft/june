@@ -8,6 +8,7 @@ using Brightsoft.Data.Entities;
 using Brightsoft.Data.Identity.Accounts;
 using Brightsoft.JuneApp.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SendGrid;
@@ -21,6 +22,7 @@ namespace Brightsoft.JuneApp.Services
         private readonly SignInManager<Account> _signInManager;
         private readonly UserManager<Account> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IJwtGenerator _jwtGenerator;
         private readonly ApplicationDbContext _context;
 
         public AccountService(ILogger<AccountService> logger,
@@ -28,12 +30,14 @@ namespace Brightsoft.JuneApp.Services
             SignInManager<Account> signInManager,
             UserManager<Account> userManager,
             ApplicationDbContext context,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IJwtGenerator jwtGenerator)
         {
             _jwtSettings = jwtSettings;
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
+            _jwtGenerator = jwtGenerator;
             _context = context;
         }
 
@@ -48,9 +52,7 @@ namespace Brightsoft.JuneApp.Services
                 Roles = userRoles
             };
 
-            var jwtGenerator = new JwtGenerator();
-
-            return jwtGenerator.GenerateToken(jwtSettings, jwtModel);
+            return _jwtGenerator.GenerateToken(jwtSettings, jwtModel);
         }
 
         #region Login & Register
@@ -77,11 +79,28 @@ namespace Brightsoft.JuneApp.Services
             {
                 throw new Exception("Invalid username or password.");
             }
+            var newRefreshToken = _jwtGenerator.GenerateRefreshToken();
+            var userRefreshToken = _context.UserRefreshTokens.FirstOrDefault(urt => urt.Username == user.UserName);
+            if (userRefreshToken != null)
+            {
+                userRefreshToken.RefreshToken = newRefreshToken;
+            }
+            else
+            {
+                _context.UserRefreshTokens.Add(new UserRefreshToken
+                {
+                    Username = user.UserName,
+                    RefreshToken = newRefreshToken
+                });
+            }
+
+            await _context.SaveChangesAsync();
 
             return new LoginResultModel
             {
                 UserName = user.UserName,
-                AccessToken = await GenerateToken(_jwtSettings, user)
+                AccessToken = await GenerateToken(_jwtSettings, user),
+                RefreshToken = newRefreshToken
             };
         }
 
@@ -102,9 +121,52 @@ namespace Brightsoft.JuneApp.Services
                 var errorMessage = result.Errors.Any() ? result.Errors.First().Description : "Cannot create a new user.";
                 throw new Exception(errorMessage);
             }
+
+            AddRefreshToken(user);
+
+
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
             return await LoginAsync(new LoginModel { UserName = model.UserName, Password = model.Password });
+        }
+
+        private void AddRefreshToken(AppUser user)
+        {
+            var refreshUser = _context.UserRefreshTokens.SingleOrDefault(u => u.Username == user.Account.UserName);
+            if (refreshUser != null) throw new Exception("User refresh token already exist");
+
+            _context.UserRefreshTokens.Add(new UserRefreshToken
+            {
+                Username = user.Account.UserName
+            });
+        }
+
+        public async Task<RefreshTokenResultModel> RefreshToken(string authenticationToken, string refreshToken)
+        {
+            var principal = _jwtGenerator.GetPrincipalFromExpiredToken(_jwtSettings, authenticationToken);
+            var username = principal.Identity.Name; //this is mapped to the Name claim by default
+
+            var user = _context.UserRefreshTokens.SingleOrDefault(u => u.Username == username);
+            if (user == null || user.RefreshToken != refreshToken) throw new Exception("wrong refresh token");
+
+            var account = await _userManager.FindByNameAsync(principal.Identity.Name);
+            var userRoles = await _userManager.GetRolesAsync(account);
+
+            var newJwtToken = _jwtGenerator.GenerateToken(_jwtSettings, new JwtModel
+            {
+                Username = account.UserName,
+                Roles = userRoles
+            });
+            var newRefreshToken = _jwtGenerator.GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            await _context.SaveChangesAsync();
+
+            return new RefreshTokenResultModel
+            {
+                AccessToken = newJwtToken,
+                RefreshToken = newRefreshToken
+            };
         }
 
         public async Task<bool> ForgotPassword(ForgotPasswordModel model)

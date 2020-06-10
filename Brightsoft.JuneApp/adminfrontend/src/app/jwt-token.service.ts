@@ -1,28 +1,52 @@
 import { Injectable } from "@angular/core";
 import * as jwt_decode from "jwt-decode";
 import { Router } from "@angular/router";
+import { Apollo } from "apollo-angular";
+import gql from "graphql-tag";
 
 @Injectable({
   providedIn: "root",
 })
 export class JWTTokenService {
   decodedToken: { [key: string]: string };
+  refreshToken: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private apollo: Apollo) {}
 
+  getRefreshToken(params: any) {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation RefreshToken(
+          $authenticationToken: String!
+          $refreshToken: String!
+        ) {
+          refreshToken(
+            authenticationToken: $authenticationToken
+            refreshToken: $refreshToken
+          ) {
+            accessToken
+            refreshToken
+          }
+        }
+      `,
+      variables: params,
+    });
+  }
   logout() {
     localStorage.removeItem("userToken");
     this.decodedToken = undefined;
     this.router.navigate(["/login"]);
   }
   get() {
-    return localStorage.getItem("userToken");
+    return {
+      authenticationToken: localStorage.getItem("userToken"),
+      refreshToken: localStorage.getItem("refreshToken"),
+    };
   }
 
-  setToken(token: string) {
-    if (token) {
-      localStorage.setItem("userToken", token);
-    }
+  setToken(token: string, refreshToken: string) {
+    localStorage.setItem("userToken", token);
+    localStorage.setItem("refreshToken", refreshToken);
   }
 
   decodeToken() {
@@ -60,9 +84,11 @@ export class JWTTokenService {
   }
 
   isTokenExpired(): boolean {
+    return false;
+    //TODO
     const expiryTime: number = parseInt(this.getExpiryTime());
     if (expiryTime) {
-      return 1000 * expiryTime - new Date().getTime() < 5000;
+      return 1000 * expiryTime - new Date().getTime() < 0;
     } else {
       return false;
     }

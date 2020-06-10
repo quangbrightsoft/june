@@ -19,6 +19,7 @@ namespace Brightsoft.Data.Data
         public DbSet<AppUser> AppUsers { get; set; }
         public override DbSet<Role> Roles { get; set; }
         public override DbSet<AccountRole> UserRoles { get; set; }
+        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

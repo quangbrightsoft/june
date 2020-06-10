@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brightsoft.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200604032404_InitialCreate")]
+    [Migration("20200610072553_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,35 @@ namespace Brightsoft.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4");
 
-            modelBuilder.Entity("Brightsoft.Core.Identity.AccountRoles.AccountRole", b =>
+            modelBuilder.Entity("Brightsoft.Data.Entities.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("AccountId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("DeletedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("AppUsers");
+                });
+
+            modelBuilder.Entity("Brightsoft.Data.Identity.AccountRoles.AccountRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
@@ -26,19 +54,14 @@ namespace Brightsoft.Data.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("AccountId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Brightsoft.Core.Identity.Accounts.Account", b =>
+            modelBuilder.Entity("Brightsoft.Data.Identity.Accounts.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +126,27 @@ namespace Brightsoft.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Brightsoft.Core.Identity.Roles.Role", b =>
+            modelBuilder.Entity("Brightsoft.Data.Identity.Accounts.UserRefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRefreshTokens");
+                });
+
+            modelBuilder.Entity("Brightsoft.Data.Identity.Roles.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,34 +171,6 @@ namespace Brightsoft.Data.Migrations
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("Brightsoft.Data.Entities.AppUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTimeOffset>("DeletedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -242,35 +257,31 @@ namespace Brightsoft.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Brightsoft.Core.Identity.AccountRoles.AccountRole", b =>
+            modelBuilder.Entity("Brightsoft.Data.Entities.AppUser", b =>
                 {
-                    b.HasOne("Brightsoft.Core.Identity.Accounts.Account", "Account")
+                    b.HasOne("Brightsoft.Data.Identity.Accounts.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
+                });
 
-                    b.HasOne("Brightsoft.Core.Identity.Roles.Role", "Role")
+            modelBuilder.Entity("Brightsoft.Data.Identity.AccountRoles.AccountRole", b =>
+                {
+                    b.HasOne("Brightsoft.Data.Identity.Roles.Role", "Role")
                         .WithMany("AccountRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Brightsoft.Core.Identity.Accounts.Account", null)
-                        .WithMany()
+                    b.HasOne("Brightsoft.Data.Identity.Accounts.Account", "Account")
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Brightsoft.Data.Entities.AppUser", b =>
-                {
-                    b.HasOne("Brightsoft.Core.Identity.Accounts.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Brightsoft.Core.Identity.Roles.Role", null)
+                    b.HasOne("Brightsoft.Data.Identity.Roles.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -279,7 +290,7 @@ namespace Brightsoft.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Brightsoft.Core.Identity.Accounts.Account", null)
+                    b.HasOne("Brightsoft.Data.Identity.Accounts.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -288,7 +299,7 @@ namespace Brightsoft.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Brightsoft.Core.Identity.Accounts.Account", null)
+                    b.HasOne("Brightsoft.Data.Identity.Accounts.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -297,7 +308,7 @@ namespace Brightsoft.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Brightsoft.Core.Identity.Accounts.Account", null)
+                    b.HasOne("Brightsoft.Data.Identity.Accounts.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -34,7 +34,7 @@ namespace Brightsoft.GraphQL.Helpers
                 }
                 else
                 {
-                    return AuthorizationResult.Fail(new []{response.Failure.Message });
+                    return AuthorizationResult.Fail(new[] { "request authorization failed" });
                 }
             }
 

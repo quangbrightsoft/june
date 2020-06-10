@@ -83,7 +83,10 @@ namespace Brightsoft.GraphQL.Helpers
         private async Task WriteResponseAsync(HttpContext context, ExecutionResult result)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = result.Errors?.Any() == true ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.OK;
+            context.Response.StatusCode = result.Errors?.Any() == true
+                ? result.Errors.First().Code.Equals("authorization")
+                    ? (int)HttpStatusCode.Unauthorized : (int)HttpStatusCode.BadRequest
+                : (int)HttpStatusCode.OK;
 
             await _writer.WriteAsync(context.Response.Body, result);
         }

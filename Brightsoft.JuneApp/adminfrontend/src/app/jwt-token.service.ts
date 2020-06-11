@@ -71,11 +71,19 @@ export class JWTTokenService {
 
   getRoles() {
     this.decodeToken();
-    return this.decodedToken
+    var tokenRolesValue = this.decodedToken
       ? this.decodedToken[
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-        ].split(",")
-      : null;
+        ]
+      : [];
+
+    if (
+      typeof tokenRolesValue == "object" &&
+      <object>tokenRolesValue.constructor === Array
+    ) {
+      return tokenRolesValue;
+    }
+    return [tokenRolesValue];
   }
 
   getExpiryTime() {

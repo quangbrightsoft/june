@@ -4,20 +4,20 @@ import { Component } from "@angular/core";
 import { DataSource } from "@angular/cdk/table";
 import { Observable, BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
-import { getAlertConfig } from '../notifications/alerts.component';
-import { AlertConfig } from 'ngx-bootstrap/alert';
+import { getAlertConfig } from "../notifications/alerts.component";
+import { AlertConfig } from "ngx-bootstrap/alert";
 
 @Component({
   templateUrl: "user.component.html",
-  
-  providers: [{ provide: AlertConfig, useFactory: getAlertConfig }]
+
+  providers: [{ provide: AlertConfig, useFactory: getAlertConfig }],
 })
 export class UserComponent {
   users: any[];
   loading = true;
   error: any;
   dataSource = new ExampleDataSource();
-  displayedColumns: string[] = ["id", "userName", "email", "roles"];
+  displayedColumns: string[] = ["id", "userName", "email", "fullName", "roles"];
   sortData = { column: "", desc: false };
   totalItems: number;
   currentPage: number = 1;

@@ -6,7 +6,7 @@ import {
 import { Injectable } from "@angular/core";
 import { JWTTokenService } from "./jwt-token.service";
 import { catchError, filter, take, switchMap } from "rxjs/operators";
-import { throwError, Observable, BehaviorSubject } from "rxjs";
+import { throwError, BehaviorSubject } from "rxjs";
 @Injectable()
 export class UniversalAppInterceptor implements HttpInterceptor {
   private refreshTokenInProgress = false;
@@ -25,28 +25,6 @@ export class UniversalAppInterceptor implements HttpInterceptor {
     });
     return next.handle(req).pipe(
       catchError((err) => {
-        // if ([401, 403].includes(err.status) && this.jWTTokenService.getUser()) {
-        //   // auto logout if 401 or 403 response returned from api
-        //   // TODO get refresh token
-        //   this.jWTTokenService.logout();
-        // }
-
-        // const error = (err && err.error && err.error.message) || err.statusText;
-        // console.error(err);
-        // return throwError(error);
-        // We don't want to refresh token for some requests like login or refresh token itself
-        // So we verify url and we throw an error if it's the case
-        // if (req.url.includes("refreshtoken") || req.url.includes("login")) {
-        //   // We do another check to see if refresh token failed
-        //   // In this case we want to logout user and to redirect it to login page
-
-        //   if (req.url.includes("refreshtoken")) {
-        //     this.jWTTokenService.logout();
-        //   }
-
-        //   return throwError(err);
-        // }
-
         // If error status is different than 401 we want to skip refresh token
         // So we check that and throw the error if it's the case
         if (err.status !== 401) {
@@ -92,7 +70,7 @@ export class UniversalAppInterceptor implements HttpInterceptor {
     );
   }
 
-  addAuthenticationToken(request) {
+  addAuthenticationToken(request: HttpRequest<any>) {
     // Get access token from Local Storage
     const accessToken = this.jWTTokenService.get().authenticationToken;
 

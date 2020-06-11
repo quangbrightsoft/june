@@ -35,12 +35,21 @@
             placeholder="Enter Email.."
             autocomplete="email"
           />
+          <control-messages
+            [control]="editForm.controls.email"
+          ></control-messages>
         </div>
         <!--/.row-->
         <div class="form-group row">
           <label class="col-md-3 col-form-label">Roles</label>
           <div class="col-md-9 col-form-label">
-            <div *ngFor="let role of editForm.get('roleControls')['controls']; let i=index;" formArrayName="roleControls">
+            <div
+              *ngFor="
+                let role of editForm.get('roleControls')['controls'];
+                let i = index
+              "
+              formArrayName="roleControls"
+            >
               <label class="form-check-label">
                 <input
                   class="form-check-input"

@@ -120,6 +120,7 @@ namespace Brightsoft.JuneApp.Services
                 throw new Exception("User does not exist");
             }
             user.Account.Email = model.Email;
+            user.Account.FullName = model.FullName;
             user.UpdatedAt = new DateTimeOffset();
             var updateUserResult = await _userManager.UpdateAsync(user.Account);
             var updateAccountResult = updateUserResult.Succeeded;

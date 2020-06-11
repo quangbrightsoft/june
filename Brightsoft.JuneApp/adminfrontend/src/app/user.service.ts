@@ -24,6 +24,7 @@ export class UserService {
             ssn
             updatedAt
             userName
+            fullName
           }
         }
       `,
@@ -46,6 +47,7 @@ export class UserService {
             ssn
             updatedAt
             userName
+            fullName
           }
         }
       `,

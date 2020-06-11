@@ -1,3 +1,4 @@
+import { ControlMessagesComponent } from './control-messages.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserEditComponent } from './user-edit.component';
 // Angular
@@ -23,7 +24,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
   ],
   declarations: [
     UserComponent,
-    UserEditComponent
+    UserEditComponent,
+    ControlMessagesComponent
   ]
 })
 export class SettingsModule { }

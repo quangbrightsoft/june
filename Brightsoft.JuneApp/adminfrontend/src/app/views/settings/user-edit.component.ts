@@ -3,7 +3,7 @@ import { UserService } from "./../../user.service";
 import { Component } from "@angular/core";
 import { DataSource } from "@angular/cdk/table";
 import { Observable, BehaviorSubject } from "rxjs";
-import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { FormGroup, FormBuilder, FormControl, FormArray } from "@angular/forms";
 import { JWTTokenService } from "../../jwt-token.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ToastService } from "angular-toastify";
@@ -25,9 +25,18 @@ export class UserEditComponent {
     private toastService: ToastService
   ) {
     this.editForm = this.formBuilder.group({
+      userName: "",
       fullName: "",
       email: "",
-      roles: this.formBuilder.group({}),
+      createdAt: "",
+      roles: [],
+      roleControls: this.formBuilder.array([]),
+      deletedAt: "",
+      id: "",
+      isDisabled: false,
+      isDeleted: false,
+      ssn: "",
+      updatedAt: "",
     });
   }
   ngOnInit() {
@@ -36,24 +45,26 @@ export class UserEditComponent {
       parseInt(this.currentUserId) &&
         this.userService.get(this.currentUserId).subscribe((response) => {
           this.currentUser = response.data.user;
-          this.editForm.controls["fullName"].setValue(
-            this.currentUser.userName
-          );
-          this.editForm.controls["email"].setValue(this.currentUser.email);
-          this.editForm.controls["roles"].setValue(this.currentUser.roles);
+          this.editForm.patchValue(this.currentUser);
+
+          this.availableRoles.forEach((currentRole, i) => {
+            const control = new FormControl(
+              response.data.user.roles.includes(currentRole)
+            ); // if first item set to true, else false
+            (this.editForm.controls.roleControls as FormArray).push(control);
+          });
         });
-    });
-    const checkboxes = <FormGroup>this.editForm.get("roles");
-    this.availableRoles.forEach((option: any) => {
-      checkboxes.addControl(option, new FormControl(false));
     });
   }
   onSubmit() {
+    const selectedroles = this.editForm.value.roleControls
+    .map((v, i) => (v ? this.availableRoles[i] : null))
+    .filter(v => v !== null);
     let params = {
       id: this.currentUserId,
       fullName: this.editForm.value.fullName,
       email: this.editForm.value.email,
-      roles: this.rolesFormGroupSelectedIds,
+      roles: selectedroles,
     };
     if (!parseInt(this.currentUserId)) {
       this.userService.create(params).subscribe(

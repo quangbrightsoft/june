@@ -1,4 +1,3 @@
-using System;
 using Brightsoft.GraphQL.Helpers.Data;
 using Brightsoft.GraphQL.Helpers.Interfaces;
 using Brightsoft.JuneApp.Models;
@@ -13,12 +12,10 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
 {
     public class AccountQueryBuilder : ISchemaBuilder
     {
-        private readonly IServiceProvider _serviceProvider;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public AccountQueryBuilder(IServiceProvider serviceProvider, IHttpContextAccessor contextAccessor)
+        public AccountQueryBuilder(IHttpContextAccessor contextAccessor)
         {
-            _serviceProvider = serviceProvider;
             _contextAccessor = contextAccessor;
         }
         public void BuildMutation(MutationRoot mutationRoot)

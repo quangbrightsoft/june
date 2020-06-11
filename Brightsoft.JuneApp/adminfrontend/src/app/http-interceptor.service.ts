@@ -20,7 +20,7 @@ export class UniversalAppInterceptor implements HttpInterceptor {
     req = req.clone({
       url: req.url,
       setHeaders: {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        Authorization: `Bearer ${this.jWTTokenService.get().authenticationToken}`,
       },
     });
     return next.handle(req).pipe(

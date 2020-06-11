@@ -87,7 +87,7 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
                         Email = context.GetArgument<string>("email"),
                     });
                 }
-            );
+            ).AuthorizeWith("AdminPolicy");
 
 
             mutationRoot.Field<BooleanGraphType>(
@@ -108,7 +108,7 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
                         Email = context.GetArgument<string>("email"),
                     });
                 }
-            );
+            ).AuthorizeWith("AdminPolicy");
         }
 
         public void BuildQuery(QueryRoot queryRoot)

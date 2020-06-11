@@ -1,3 +1,4 @@
+import { FormlyModule } from '@ngx-formly/core';
 import { ControlMessagesComponent } from './control-messages.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserEditComponent } from './user-edit.component';
@@ -20,7 +21,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     CdkTableModule,
     ReactiveFormsModule,
     PaginationModule.forRoot(),
-    AlertModule
+    AlertModule,
+    FormlyModule
   ],
   declarations: [
     UserComponent,

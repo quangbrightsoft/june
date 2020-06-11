@@ -13,6 +13,7 @@ import {
 import { JWTTokenService } from "../../jwt-token.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ToastService } from "angular-toastify";
+import { FormlyFieldConfig } from "@ngx-formly/core";
 
 @Component({
   templateUrl: "user-edit.component.html",
@@ -22,6 +23,56 @@ export class UserEditComponent {
   currentUserId: string;
   currentUser: UserModel = { roles: [] } as UserModel;
   availableRoles: string[] = ["Admin", "PowerUser"];
+
+  formlyForm: FormGroup = this.formBuilder.group({
+    email: ["", Validators.required],
+  });
+  model = { email: "", fullName: "", roles: this.availableRoles };
+  fields: FormlyFieldConfig[] = [
+    {
+      key: "email",
+      type: "input",
+      templateOptions: {
+        label: "Email address",
+        placeholder: "Enter email",
+        required: true,
+      },
+    },
+    {
+      key: "fullName",
+      type: "input",
+      templateOptions: {
+        label: "fullName",
+        placeholder: "Enter Full Name",
+        required: true,
+      },
+    },
+    {
+      key: "roles",
+      type: "multicheckbox",
+      templateOptions: {
+        label: "Roles",
+        description: "Roles for the user",
+        required: true,
+        options: [
+          {
+            key: "Admin",
+            value: "Admin",
+          },
+          {
+            key: "PowerUser",
+            value: "PowerUser",
+          },
+        ],
+      },
+      validation: {
+        messages: {
+          pattern: "Please Choose",
+        },
+      },
+    },
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -98,6 +149,43 @@ export class UserEditComponent {
           }
         );
       }
+    } else {
+      console.log("invalid form!");
+    }
+  }
+  onSubmitFormly(model) {
+    console.log(model)
+    if (this.formlyForm.dirty && this.formlyForm.valid) {
+      // const selectedroles = this.editForm.value.roleControls
+      //   .map((v, i) => (v ? this.availableRoles[i] : null))
+      //   .filter((v) => v !== null);
+      // let params = {
+      //   id: this.currentUserId,
+      //   fullName: this.editForm.value.fullName,
+      //   email: this.editForm.value.email,
+      //   roles: selectedroles,
+      // };
+      // if (!parseInt(this.currentUserId)) {
+      //   this.userService.create(params).subscribe(
+      //     (result) => {
+      //       this.goTo("/settings/user");
+      //       this.addInfoToast("success!");
+      //     },
+      //     (err) => {
+      //       this.addInfoToast("err!");
+      //     }
+      //   );
+      // } else {
+      //   this.userService.edit(params).subscribe(
+      //     (result) => {
+      //       this.goTo("/settings/user");
+      //       this.addInfoToast("success!");
+      //     },
+      //     (err) => {
+      //       this.addInfoToast("err!");
+      //     }
+      //   );
+      // }
     } else {
       console.log("invalid form!");
     }

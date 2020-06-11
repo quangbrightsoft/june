@@ -46,6 +46,8 @@ import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
 import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ReactiveFormsModule } from "@angular/forms";
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 @NgModule({
   imports: [
@@ -65,6 +67,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     HttpLinkModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyBootstrapModule,
   ],
   declarations: [
     AppComponent,

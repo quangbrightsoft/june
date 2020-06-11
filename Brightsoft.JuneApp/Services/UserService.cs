@@ -1,11 +1,15 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Brightsoft.Authentication.Jwt;
 using Brightsoft.Data.Data;
 using Brightsoft.Data.Entities;
 using Brightsoft.Data.Identity.Accounts;
 using Brightsoft.Data.Identity.Roles;
 using Brightsoft.JuneApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -150,5 +154,8 @@ namespace Brightsoft.JuneApp.Services
             _context.Remove(user);
             return await _context.SaveChangesAsync() > 0;
         }
+
+
+
     }
 }

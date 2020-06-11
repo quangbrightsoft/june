@@ -1,3 +1,4 @@
+using Brightsoft.Authentication;
 using Brightsoft.GraphQL.Helpers.Data;
 using Brightsoft.GraphQL.Helpers.Interfaces;
 using Brightsoft.JuneApp.Models;
@@ -107,6 +108,19 @@ namespace Brightsoft.JuneApp.GraphQl.QueryBuilders
                         FullName = context.GetArgument<string>("fullName"),
                         Email = context.GetArgument<string>("email"),
                     });
+                }
+            ).AuthorizeWith("AdminPolicy");
+
+
+            mutationRoot.Field<BooleanGraphType>(
+                "deleteUser",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
+                resolve: context =>
+                {
+                    var accountService = _contextAccessor.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                    var u = TokenHelpers.GetCurrentUsername(_contextAccessor.HttpContext);
+                    return accountService.DeleteUserAsync(context.GetArgument<int>("id"), u);
                 }
             ).AuthorizeWith("AdminPolicy");
         }

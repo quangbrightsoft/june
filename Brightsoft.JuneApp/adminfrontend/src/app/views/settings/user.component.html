@@ -1,4 +1,3 @@
-
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header">
@@ -52,6 +51,20 @@
             Roles
           </th>
           <td cdk-cell *cdkCellDef="let element">{{ element.roles }}</td>
+        </ng-container>
+        <ng-container cdkColumnDef="actions">
+          <th cdk-header-cell *cdkHeaderCellDef>
+            Actions
+          </th>
+          <td cdk-cell *cdkCellDef="let element">
+            <button
+              type="button"
+              class="btn btn-block btn-warning"
+              (click)="deleteUser(element.id)"
+            >
+              Delete
+            </button>
+          </td>
         </ng-container>
 
         <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>

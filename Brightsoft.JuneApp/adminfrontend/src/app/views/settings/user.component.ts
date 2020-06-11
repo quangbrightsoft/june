@@ -17,7 +17,14 @@ export class UserComponent {
   loading = true;
   error: any;
   dataSource = new ExampleDataSource();
-  displayedColumns: string[] = ["id", "userName", "email", "fullName", "roles"];
+  displayedColumns: string[] = [
+    "id",
+    "userName",
+    "email",
+    "fullName",
+    "roles",
+    "actions",
+  ];
   sortData = { column: "", desc: false };
   totalItems: number;
   currentPage: number = 1;
@@ -51,7 +58,17 @@ export class UserComponent {
 
     this.getUsers();
   }
-
+  deleteUser(userId: string) {
+    this.userService.delete(userId).subscribe((result: any) => {
+      if (!result.errors) {
+        this.dataSource.data;
+        this.loading = false;
+        this.getUsers();
+      } else {
+        console.error("ERROR in delete", result.errors);
+      }
+    });
+  }
   goTo(route: string) {
     this.router.navigate([route]).catch(console.log);
   }

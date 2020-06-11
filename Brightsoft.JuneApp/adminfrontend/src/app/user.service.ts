@@ -32,7 +32,6 @@ export class UserService {
     });
   }
   get(id: string): Observable<any> {
-    let token = document.cookie;
     return this.apollo.mutate({
       mutation: gql`
         query QueryUsers($id: String) {
@@ -49,6 +48,16 @@ export class UserService {
             userName
             fullName
           }
+        }
+      `,
+      variables: { id: id },
+    });
+  }
+  delete(id: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation DeleteUser($id: Int!) {
+          deleteUser(id: $id)
         }
       `,
       variables: { id: id },
